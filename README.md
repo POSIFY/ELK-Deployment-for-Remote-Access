@@ -4,9 +4,13 @@
 
 ### Background to the Study
 The onset of the COVID-19 pandemic brought about a fundamental shift in organizational business processes worldwide. This global change meant that a significant number of firms had to move to fully remote or hybrid work structures. The uninterrupted flow of business processes had to be maintained at all costs, so in remote work and hybrid work models had to be executed along with social distancing protocols and government regulations in place. Knowledge workers, a group that comprises those permeated with information and technology-stimulated work, surpassed the milestone of 70% remote work employment by Mid 2023 (Capita Works, 2024).
+
 Such a tremendous transformation illustrates how a large section of the global workforce is now accustomed to the flexi-place of work. In particular, the move is profoundly appealing due to enhanced work life integration, higher levels of freedom, and being able to access talent beyond geographical frontiers. This is bound to happen, but the rate at which it will happen is what varies according to the pace at which Terminal work flexibility continues to gain limelight around the world, Lee & Park (2023); Smith & Doe (2022).
+
 The hybrid paradigm enhances employee satisfaction and productivity and improves work life balance and commuting times. In addition, companies can widen their recruitment horizons and leverage a spatially distributed talent pool. On the other hand, the move to remote work poses serious cybersecurity issues. The ability to connect remotely is often via unsecure networks like home Wi-Fi, cellular data, and public Wi-Fi hotspots. Corporate systems have become far more vulnerable to major breaches. Cybersecurity threats like man in the middle (MITM) attacks, credential theft, endpoint compromises, and the influx of malware become serious issues. These threats undermine the fundamental principles of cybersecurity: confidentiality, integrity, and availability (CIA) (Mueller, n.d.; National Institute of Standards and Technology [NIST], n.d.; SentinelOne, 2025). In the absence of reliable protective systems, companies stand to face data leaks, operational downtime, monetary damage, and damage to reputation (Johnson & Wang, 2023).
+
 This project aims to build a secure remote access infrastructure that uses industry vetted technologies, follows industry benchmarks, and incorporates continuous verification processes. The objective is to build a highly scalable, highly resilient, and easy to use framework that serves the intricate security requirements of hybrid employees.
+
 As an illustration, consider a mid-sized, multinational company that, prior to 2020, depended heavily on perimeter-centric security models, employing firewalls and a limited capacity VPN. With fires, VPN capabilities, and remote work, these legacy systems were overstrained and suffered from a number of neglected password reuse, misconfiguration, and a horde of cybersecurity issues, from reuse and misconfigured VPNs (Kumar & Sharma, 2023; Al Ameen & Talukder, 2023). This project aims to create a controlled virtual environment to simulate and subsequently design, test, and iterate on remote access systems that address contemporary cyber security challenges.
 
 ---
@@ -87,5 +91,18 @@ volumes:
   es_data:
     driver: local
 ```
+
+### ELK Deployment Results
+<img width="940" height="392" alt="image" src="https://github.com/user-attachments/assets/5a601539-d53f-4bcc-92d3-99fb0bc1ecdd" />
+
+**Key Observations**
+1.	The integration of pfSense, WireGuard, Nginx, and ELK Stack worked effectively for secure remote access, traffic filtering, and log monitoring.
+2.	System performance remained stable during simulated multiple user connections.
+3.	Authelia’s MFA feature could not be fully tested because the setup used localhost instead of a domain name.
+4.	Using a proper domain and SSL certificates in future tests may enable full MFA functionality.
+5.	The framework is suitable for SME deployment, requiring minimal resources.
+
+**Summary**
+Overall, the framework performed effectively, with all components functioning as expected except for Authelia, which encountered a domain related limitation during testing. The results validate the framework’s suitability for providing secure remote access in SME environments, with potential improvements in authentication deployment for production environments.
 
 
