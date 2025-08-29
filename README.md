@@ -1,5 +1,7 @@
 # Secure Remote Access for SMEs
 
+<img width="941" height="437" alt="image" src="https://github.com/user-attachments/assets/7069cfdd-4bd1-4d7f-84d8-cee406670a64" />
+
 ### Background to the Study
 The onset of the COVID-19 pandemic brought about a fundamental shift in organizational business processes worldwide. This global change meant that a significant number of firms had to move to fully remote or hybrid work structures. The uninterrupted flow of business processes had to be maintained at all costs, so in remote work and hybrid work models had to be executed along with social distancing protocols and government regulations in place. Knowledge workers, a group that comprises those permeated with information and technology-stimulated work, surpassed the milestone of 70% remote work employment by Mid 2023 (Capita Works, 2024).
 Such a tremendous transformation illustrates how a large section of the global workforce is now accustomed to the flexi-place of work. In particular, the move is profoundly appealing due to enhanced work life integration, higher levels of freedom, and being able to access talent beyond geographical frontiers. This is bound to happen, but the rate at which it will happen is what varies according to the pace at which Terminal work flexibility continues to gain limelight around the world, Lee & Park (2023); Smith & Doe (2022).
@@ -37,5 +39,53 @@ For clarity and consistency, the following key terms are defined as they are use
 * WireGuard: An open source VPN protocol known for simplicity, speed, and modern encryption standards, used in this study to secure remote connections.
 * Authelia: An open source authentication and authorization server that supports Single Sign On (SSO) and MFA, enhancing access control for SMEs.
 * privacyIDEA: An open source system for managing multi factor authentication tokens, supporting delivery methods such as SMS, email, and authenticator apps.
+
+yml
+```
+version: '3.3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    container_name: elasticsearch
+    environment:
+        discovery.type=single node
+        ES_JAVA_OPTS= Xms1g  Xmx1g
+        xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft:  1
+        hard:  1
+    volumes:
+        es_data:/usr/share/elasticsearch/data
+    ports:
+        "9200:9200"
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.13.4
+    container_name: logstash
+    volumes:
+        ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+    ports:
+        "514:514/udp"     # Syslog UDP from pfSense
+        "5044:5044"       # Beats input (optional for future)
+    depends_on:
+        elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.4
+    container_name: kibana
+    environment:
+        ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        SERVER_HOST=0.0.0.0   # Important for access via IP
+    ports:
+        "5601:5601"
+    depends_on:
+        elasticsearch
+
+volumes:
+  es_data:
+    driver: local
+```
 
 
